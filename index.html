@@ -7,24 +7,30 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <script src="assets/plugins/d3.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <style>
+    svg circle.old { fill: green; }
+    svg circle.new { fill: blue;  }
+  </style>
 </head>
 <body>
  
-<h2 align="center"> Interactive Quad Tree </h2>
+<h3 align="center"> Interactive Quad Tree </h3>
     <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
-              <h3 align="center"> Space View</h3>
-              <div id="space_container" style="height:700px;width:97%;background-color: darkseagreen;margin-left:5%;"></div>
+              <h4 align="center"> Space View</h4>
+              <div id="space_container" style="height:600px;width:600px;background-color: darkseagreen;">
+                    <svg width="100%" height="100%"></svg>
+             </div>
           </div>
           <div class="col-md-6">
-               <h3 align="center"> Tree View</h3>
-               <div id="tree_container" style="height:700px;width:90%;background-color: darkslategrey;margin-left:0;"></div>
+               <h4 align="center"> Tree View</h4>
+               <div id="tree_container" style="height:700px;width:100%;background-color: darkslategrey;margin-left:0;"></div>
           </div>
         </div>
       </div>
       
-
+    <script src="Scripts/spaceview.js"></script>
 </body>
 </html> 
