@@ -1,9 +1,9 @@
 var rect={};
-var points={};
 var all_rect=[];
 var all_point=[];
 var Nodes={};
 var all_Nodes=[];
+var QTree={};
 
 var count=1;
 
@@ -44,47 +44,80 @@ function init() {
     svg.on('click', function() {
 
     //draw the points on the spaceview svg
+        var points={};
         var coords = d3.mouse(this);
-        console.log(coords);
+    //    console.log(coords);
         drawCircle(coords[0], coords[1], 5);
+       // addNode();
         points.x=coords[0];
         points.y=coords[1];
-        points.id=count;
         all_point.push({point: points});
   
-        console.log(all_point);
+     //   console.log(all_point);
 
     if(count==1)
     {   // read svg x,y,w,h
         var sizes   = document.getElementById("space_container"); // or other selector like querySelector()
         var container = sizes.getBoundingClientRect(); // get the bounding rectangle
-
-        console.log( container.width );
-        console.log( container.height);
-
+        var corner_points={};
+       // console.log( container.width );
+       // console.log( container.height);
+    
 
         //create the 1st node
         Nodes.id=1;
-        Nodes.puoint=points;
-        rect.x=container.x;
-        rect.y=container.y;
-        rect.width=container.width;
-        rect.height=container.height;
-        Nodes.square=rect;
+        Nodes.point=points;
+        Nodes.top_left= null;
+        Nodes.bottom_left= null;
+        Nodes.top_right= null;
+        Nodes.bottom_right= null;
+        Nodes.isroot= true; 
+        Nodes.isinternal=false;
+        corner_points.x1= 0;
+        corner_points.y1= 0;
+        corner_points.x2=600;
+        corner_points.y2= 600;
+        Nodes.corners=corner_points;
+
+
+        QTree.root=Nodes;
+
         all_Nodes.push({Nodes});
-        console.log(Nodes);
+       // console.log(Nodes);
+        console.log(QTree);
         count++;
     }
         
     //check if need to divide the space
-    if(count>1){
+    else if(count>1){
          var sizes   = document.getElementById("space_container"); // or other selector like querySelector()
          var container = sizes.getBoundingClientRect(); // get the bounding rectangle
 
-         drawRect(0, 0, (container.width)/2,(container.height)/2);
-         drawRect(0, 300, (container.width)/2,(container.height)/2);
-         drawRect(300, 0, (container.width)/2,(container.height)/2);
-         drawRect(300, 300, (container.width)/2,(container.height)/2);
+        //  drawRect(0, 0, (container.width)/2,(container.height)/2);
+        //  drawRect(0, 300, (container.width)/2,(container.height)/2);
+        //  drawRect(300, 0, (container.width)/2,(container.height)/2);
+        //  drawRect(300, 300, (container.width)/2,(container.height)/2);
+
+        var Node={}; 
+
+        Node.id=count;
+        Node.point=points;
+        Node.top_left= null;
+        Node.bottom_left= null;
+        Node.top_right= null;
+        Node.bottom_right= null;
+        Node.isroot= false; 
+     
+        console.log(Node)
+
+
+        updateTree(QTree.root,Node);
+ 
+
+        all_Nodes.push({Nodes});
+       // console.log(Nodes);
+        console.log(QTree);
+        count++;
 
 
 
@@ -92,6 +125,7 @@ function init() {
          count++;
 
     }
+    else ;
     
     //draw rect for space division
 
