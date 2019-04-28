@@ -34,7 +34,7 @@ function drawRect(x,y,width,height){
 
 var count=1;
 
-var svg = d3.select('svg'); 
+var svg = d3.select('#svg1'); 
 
 function init() {
 
@@ -79,6 +79,7 @@ function init() {
 
 
         drawRect(corner_points.x1, corner_points.y1, 600,600);
+        drawleafNode(280,80,20,20);
 
         QTree.root=root;
 
