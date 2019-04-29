@@ -28,9 +28,14 @@ function drawleafNode(x,y,width,height){
 // function to draw tree from QTree
 function draw_tree(QNode,f1,f2,f3,f4,l){
 
+    // var tree=d3.tree()
+    //           .size(550,550);
+
+    // var Tnodes=tree(QNode);
+
     tree_view.selectAll("*").remove();
 
-    QTree.root.display(QNode,f1,f2,f3,f4,l);
+   QTree.root.display(QNode,f1,f2,f3,f4,l);
 
     
 

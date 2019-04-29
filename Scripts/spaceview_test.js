@@ -4,6 +4,7 @@ var all_point=[];
 var Nodes={};
 var all_Nodes=[];
 var QTree={};
+var QTreeData={};
 
 
 //function to draw points
@@ -74,7 +75,7 @@ function init() {
         Nodes.corners=corner_points;
         
 
-        let root= new Quad(points, corner_points,true, false, null,null,null,null);
+        let root= new Quad("root",points, corner_points,true, false, [null,null,null,null]);
         console.log(root);
 
 

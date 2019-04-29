@@ -1,13 +1,11 @@
 class Quad {
-    constructor(point, corners, root, internal, t_l, t_r, b_l, b_r) {
+    constructor(name, point, corners, root, internal,children ) {
+        this.name=name;
         this.point = point;
         this.corners = corners;
         this.isroot = root;
         this.isinternal = internal;
-        this.top_left=t_l;
-        this.top_right=t_r;
-        this.bottom_left=b_l;
-        this.bottom_right=b_r;
+        this.children=children;
     
     }
     
@@ -75,10 +73,10 @@ class Quad {
         
         //create the subquads
 
-        pNode.top_left= new Quad(null,c_t_le,false,false,null,null,null,null);
-        pNode.top_right= new Quad(null,c_t_ri,false,false,null,null,null,null);
-        pNode.bottom_left= new Quad(null,c_b_le,false,false,null,null,null,null);
-        pNode.bottom_right= new Quad(null,c_b_ri,false,false,null,null,null,null);
+        pNode.children[0]= new Quad("TL",null,c_t_le,false,false,[null,null,null,null]);
+        pNode.children[1]= new Quad("TR",null,c_t_ri,false,false,[null,null,null,null]);
+        pNode.children[2]= new Quad("BL",null,c_b_le,false,false,[null,null,null,null]);
+        pNode.children[3]= new Quad("BR",null,c_b_ri,false,false,[null,null,null,null]);
 
         console.log(c_t_le);
         console.log(c_t_ri);
@@ -103,71 +101,71 @@ class Quad {
 
 
       //  move current point to one of the subquads
-         if (newNode.top_left.isinRange(newNode.point))
+         if (newNode.children[0].isinRange(newNode.point))
          {
-             newNode.top_left.point=newNode.point; 
+             newNode.children[0].point=newNode.point; 
              newNode.point=null;
          }
-        else if (newNode.top_right.isinRange(newNode.point))
+        else if (newNode.children[1].isinRange(newNode.point))
          {
-             newNode.top_right.point=newNode.point; 
+             newNode.children[1].point=newNode.point; 
              newNode.point=null;
          }
-        else if (newNode.bottom_left.isinRange(newNode.point))
+        else if (newNode.children[2].isinRange(newNode.point))
          {
-             newNode.bottom_left.point=newNode.point; 
+             newNode.children[2].point=newNode.point; 
              newNode.point=null;
          }
-        else if (newNode.bottom_right.isinRange(newNode.point))
+        else if (newNode.children[3].isinRange(newNode.point))
         {
-             newNode.bottom_right.point=newNode.point;
+             newNode.children[4].point=newNode.point;
              newNode.point=null;
         }
         else;
      // determine in which subquads the input point is gonna be
-        if (newNode.top_left.isinRange(pointIn))
+        if (newNode.children[0].isinRange(pointIn))
          {
-            if(newNode.top_left.point==null){
-                newNode.top_left.point=pointIn; 
+            if(newNode.children[0].point==null){
+                newNode.children[0].point=pointIn; 
             }
             else 
             {
-                newNode.top_left.insert(newNode.top_left,pointIn);
+                newNode.children[0].insert(newNode.children[0],pointIn);
             }
                
             
          }
-        else if (newNode.top_right.isinRange(pointIn))
+        else if (newNode.children[1].isinRange(pointIn))
          {
-            if(newNode.top_right.point==null){
-                newNode.top_right.point=pointIn; 
+            if(newNode.children[1].point==null){
+                newNode.children[1].point=pointIn; 
             }
             else{
-                newNode.top_right.insert(newNode.top_right,pointIn);
+                newNode.children[1].insert(newNode.children[1],pointIn);
             }
            
             
          }
-        else if (newNode.bottom_left.isinRange(pointIn))
+        else if (newNode.children[2].isinRange(pointIn))
          {
-            if(newNode.bottom_left.point==null){
-                newNode.bottom_left.point=pointIn; 
+            if(newNode.children[2].point==null){
+                newNode.children[2].point=pointIn; 
             }
             else
             {
-                newNode.bottom_left.insert(newNode.bottom_left,pointIn);
+                newNode.children[2].insert(newNode.children[2],pointIn);
             }
 
             
          }
-        else if (newNode.bottom_right.isinRange(pointIn))
+        else if (newNode.children[3].isinRange(pointIn))
         {
-            if(newNode.bottom_right.point!=null){
-                newNode.bottom_right.point=pointIn; 
+            if(newNode.children[3].point!=null){
+                newNode.children[3].point=pointIn; 
             }
             else
             {
-                newNode.bottom_right.insert(newNode.bottom_right,pointIn);
+                newNode.children[3].insert(newNode.children[3],pointIn);
             }
             
             
@@ -180,24 +178,24 @@ class Quad {
        {
         
   
-            if(newNode.top_left.isinRange(pointIn))
+            if(newNode.children[0].isinRange(pointIn))
             {
-                newNode.top_left.insert(newNode.top_left,pointIn);
+                newNode.children[0].insert(newNode.children[0],pointIn);
             }
 
-            else if(newNode.top_right.isinRange(pointIn))
+            else if(newNode.children[1].isinRange(pointIn))
             {
-                newNode.top_right.insert(newNode.top_right,pointIn);
+                newNode.children[1].insert(newNode.children[1],pointIn);
             }
 
-            else if(newNode.bottom_right.isinRange(pointIn))
+            else if(newNode.children[3].isinRange(pointIn))
             {
-                newNode.bottom_right.insert(newNode.bottom_right,pointIn);
+                newNode.children[3].insert(newNode.children[3],pointIn);
             }
 
-            else if(newNode.bottom_left.isinRange(pointIn))
+            else if(newNode.children[2].isinRange(pointIn))
             {
-                newNode.bottom_left.insert(newNode.bottom_left,pointIn);
+                newNode.children[2].insert(newNode.children[2],pointIn);
             }
 
             else;
@@ -297,8 +295,8 @@ class Quad {
     }
 
     //search function
-    search(){
+    // search(){
 
-    }
+    // }
 
 }
