@@ -79,11 +79,13 @@ function init() {
 
 
         drawRect(corner_points.x1, corner_points.y1, 600,600);
-        drawleafNode(280,80,20,20);
+        //drawleafNode(280,80,20,20);
 
         QTree.root=root;
+        draw_tree(QTree.root,false,false,false,false,0);
 
         all_Nodes.push({Nodes});
+
        // console.log(Nodes);
         console.log(QTree);
         count++;
@@ -96,6 +98,7 @@ function init() {
         //let newNode= new Quad(points, null,false, false, null,null,null,null);
         QTree.root.insert(QTree.root,points);
         console.log(QTree.root);
+        draw_tree(QTree.root,false,false,false,false,0);
         count++;
 
 
@@ -103,6 +106,7 @@ function init() {
     else ;
     
     //draw rect for space division
+   
 
     });
 

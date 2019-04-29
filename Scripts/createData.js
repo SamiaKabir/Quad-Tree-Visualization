@@ -216,10 +216,51 @@ class Quad {
 
     }
 
+// function to display the tree
+    display(currentNode,f1,f2,f3,f4,level){
 
+        if((currentNode.isroot==true)&&(currentNode.isinternal==false) )//it's the 1st node
+        {
+            drawleafNode(280,30,10,10);
+        }
+        else if((currentNode.isroot==true)&&(currentNode.isinternal==true) )//root is now an interanal node 
+        {
+            drawInternalNode(280,30,5);
+        }
+        else if((currentNode.isroot==false)&&(currentNode.isinternal==true) )
+        {
+            drawInternalNode(100,200,5);
+        }
+
+        else if((currentNode.isroot==false)&&(currentNode.isinternal==false) )
+        {
+            drawleafNode(100,200,10,10);
+        }
+
+        else;
+
+        if(currentNode.top_left!=null)
+        {
+            currentNode.top_left.display(currentNode.top_left,true,false,false,false,level+1);
+        }
+
+        if(currentNode.top_right!=null)
+        {
+            currentNode.top_right.display(currentNode.top_right,false,true,false,false,level+1);
+        }
+        if(currentNode.bottom_right!=null)
+        {
+            currentNode.bottom_right.display(currentNode.bottom_right,false,false,false,true,level+1);
+        }
+        if(currentNode.bottom_left!=null)
+        {
+            currentNode.bottom_left.display(currentNode.bottom_left,false,false,true,false,level+1);
+        }
+
+    }
+
+    //search function
     search(){
-
-
 
     }
 

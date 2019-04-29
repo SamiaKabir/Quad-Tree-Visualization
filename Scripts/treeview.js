@@ -8,7 +8,7 @@ function drawInternalNode(x, y, size) {
         .attr("cx", x)
         .attr("cy", y)
         .attr("r", size)
-        .attr("fill","green");
+        .attr("fill","#ccffcc");
 }
 
 
@@ -22,5 +22,17 @@ function drawleafNode(x,y,width,height){
         .attr("y", y)
         .attr("width", width)
         .attr("height",height)
-        .attr("fill","grey");
+        .attr("fill","#efeff5");
+ }
+
+// function to draw tree from QTree
+function draw_tree(QNode,f1,f2,f3,f4,l){
+
+    tree_view.selectAll("*").remove();
+
+    QTree.root.display(QNode,f1,f2,f3,f4,l);
+
+    
+
 }
+
