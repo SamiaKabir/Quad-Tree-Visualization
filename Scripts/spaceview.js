@@ -4,11 +4,12 @@ var all_point=[];
 var Nodes={};
 var all_Nodes=[];
 var QTree={};
+var QTree_data={};
 
 
 //function to draw points
 function drawCircle(x, y, size) {
-    console.log('Drawing circle at', x, y, size);
+ //   console.log('Drawing circle at', x, y, size);
     svg.append("circle")
         .attr('class', 'click-circle')
         .attr("cx", x)
@@ -20,7 +21,7 @@ function drawCircle(x, y, size) {
 //functions to draw rectangle 
 
 function drawRect(x,y,width,height){
-    console.log('Drawing new node at', x, y, width , height);
+   // console.log('Drawing new node at', x, y, width , height);
     svg.append("rect")
         .attr('class', 'node-rect')
         .attr("x", x)
@@ -100,6 +101,7 @@ function init() {
         console.log(QTree.root);
         draw_tree(QTree.root,false,false,false,false,1);
         count++;
+       
 
 
     }
@@ -114,3 +116,4 @@ function init() {
 }
 
 init();
+

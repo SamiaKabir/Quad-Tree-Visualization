@@ -217,81 +217,49 @@ class Quad {
     }
 
 // function to display the tree
-    display(currentNode,f1,f2,f3,f4,level){
+    display(currentNode,cx1,cx2,f1,f2,f3,f4,level){
 
-        var gap= (1/level)*80;
-
+        var temp1= cx1-(150/level);
+        var temp2= cx2+100;
+        var temp3= width_offset(level);
         if((currentNode.isroot==true)&&(currentNode.isinternal==false) )//it's the 1st node
         {
-            drawleafNode(280,25,10,10);
+            drawleafNode(cx1,cx2,2.5);
         }
-        else if((currentNode.isroot==true)&&(currentNode.isinternal==true) )//root is now an interanal node 
+        else if((currentNode.isinternal==true) )//root is now an interanal node 
         {
-            drawInternalNode(280,30,5);
+    
+            drawInternalNode(cx1,cx2,2.5);
+
+            drawleafNode(temp1,temp2,2.5); 
+            drawleafNode(temp1+temp3,temp2,2.5); 
+            drawleafNode(temp1+2*(temp3),temp2,2.5);  
+            drawleafNode(temp1+3*(temp3),temp2,2.5);  
+
+            drawLine(cx1,cx2,temp1,temp2);
+            drawLine(cx1,cx2,temp1+temp3,temp2);
+            drawLine(cx1,cx2,temp1+2*(temp3),temp2);
+            drawLine(cx1,cx2,temp1+3*(temp3),temp2);
+
         }
-        else if((currentNode.isroot==false)&&(currentNode.isinternal==true) )
-        { 
-            var gap= (1/level)*80;
-              // nodes that are not root but internal
-            if(f1==true)
-            {
-                drawInternalNode(500*(1/level),30*level,5);  
-            }
-
-            if(f2==true){
-                drawInternalNode(500*(1/level)+gap,30*level,5);  
-            }
-
-            if(f3==true){
-                drawInternalNode(500*(1/level)+gap*2,30*level,5);  
-            }
-
-            if(f4==true){
-                drawInternalNode(500*(1/level)+gap*3,30*level,5);  
-            }
-        }
-
-        else if((currentNode.isroot==false)&&(currentNode.isinternal==false) )  //leaf nodes
-        {
-            
-
-
-            if(f1==true)
-            {
-                drawleafNode(500*(1/level),30*level,10,10);
-            }
-
-            if(f2==true){
-                drawleafNode(500*(1/level)+gap,30*level,10,10);
-            }
-
-            if(f3==true){
-                drawleafNode(500*(1/level)+gap*2,30*level,10,10);
-            }
-
-            if(f4==true){
-                drawleafNode(500*(1/level)+gap*3,30*level,10,10);
-            }
-        }
-
         else;
 
         if(currentNode.top_left!=null)
         {
-            currentNode.top_left.display(currentNode.top_left,true,false,false,false,level+1);
+            currentNode.top_left.display(currentNode.top_left,temp1,temp2,true,false,false,false,level+1);
         }
 
         if(currentNode.top_right!=null)
         {
-            currentNode.top_right.display(currentNode.top_right,false,true,false,false,level+1);
+            currentNode.top_right.display(currentNode.top_right,temp1+temp3,temp2,false,true,false,false,level+1);
         }
         if(currentNode.bottom_right!=null)
         {
-            currentNode.bottom_right.display(currentNode.bottom_right,false,false,false,true,level+1);
+            currentNode.bottom_right.display(currentNode.bottom_right,temp1+3*(temp3),temp2,false,false,false,true,level+1);
         }
         if(currentNode.bottom_left!=null)
         {
-            currentNode.bottom_left.display(currentNode.bottom_left,false,false,true,false,level+1);
+            currentNode.bottom_left.display(currentNode.bottom_left,temp1+2*(temp3),temp2,false,false,true,false,level+1);
         }
 
     }
