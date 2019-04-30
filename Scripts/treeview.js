@@ -1,5 +1,5 @@
 var tree_view=d3.select("#svg2")
-.call(d3.zoom().on("zoom", function () {
+.call(d3.zoom().scaleExtent([1 , 8]).on("zoom", function () {
     tree_view.attr("transform", d3.event.transform)
  }));
 
@@ -11,7 +11,7 @@ function drawInternalNode(x, y, size) {
         .attr("cx", x)
         .attr("cy", y)
         .attr("r", 3)
-        .attr("fill","green");
+        .attr("fill","darkgreen");
 }
 
 
@@ -24,9 +24,19 @@ function drawleafNode(x,y,width){
         .attr("cx", x)
         .attr("cy", y)
         .attr("r", 3)
-        .attr("fill","darkgrey");
+        .attr("fill","blue");
  }
+//function to highlight node
 
+function drawhighlightnode(x, y, size){
+
+    tree_view.append("circle")
+    .attr('class', 'h-circle')
+    .attr("cx", x)
+    .attr("cy", y)
+    .attr("r", 3)
+    .attr("fill","orange");
+}
  //function to draw linking lines
  function drawLine(x_1,y_1,x_2,y_2){
 
@@ -38,6 +48,10 @@ function drawleafNode(x,y,width){
     .attr("y2", y_2-3)    // y position of the second end of the line
     .attr("stroke-width",0.5);
  }
+
+
+
+
 
 function depth_offset(level){
     return 100+(level-1)*70;
@@ -84,6 +98,7 @@ function draw_tree(QNode,f1,f2,f3,f4,l){
     // var Tnodes=tree(QNode);
 
     tree_view.selectAll("*").remove();
+    tree_view.selectAll(".h-circle") .style("fill","blue");
 
    QTree.root.display(QNode,300,30,f1,f2,f3,f4,l);
 

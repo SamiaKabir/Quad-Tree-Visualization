@@ -1,9 +1,10 @@
 class Quad {
-    constructor(point, corners, root, internal, t_l, t_r, b_l, b_r) {
+    constructor(point, corners, root, internal,hl, t_l, t_r, b_l, b_r) {
         this.point = point;
         this.corners = corners;
         this.isroot = root;
         this.isinternal = internal;
+        this.highlight=hl;
         this.top_left=t_l;
         this.top_right=t_r;
         this.bottom_left=b_l;
@@ -75,10 +76,10 @@ class Quad {
         
         //create the subquads
 
-        pNode.top_left= new Quad(null,c_t_le,false,false,null,null,null,null);
-        pNode.top_right= new Quad(null,c_t_ri,false,false,null,null,null,null);
-        pNode.bottom_left= new Quad(null,c_b_le,false,false,null,null,null,null);
-        pNode.bottom_right= new Quad(null,c_b_ri,false,false,null,null,null,null);
+        pNode.top_left= new Quad(null,c_t_le,false,false,false,null,null,null,null);
+        pNode.top_right= new Quad(null,c_t_ri,false,false,false,null,null,null,null);
+        pNode.bottom_left= new Quad(null,c_b_le,false,false,false,null,null,null,null);
+        pNode.bottom_right= new Quad(null,c_b_ri,false,false,false,null,null,null,null);
 
         console.log(c_t_le);
         console.log(c_t_ri);
@@ -224,17 +225,56 @@ class Quad {
         var temp3= width_offset(level);
         if((currentNode.isroot==true)&&(currentNode.isinternal==false) )//it's the 1st node
         {
+           if(currentNode.highlight==true){
+               drawhighlightnode(cx1,cx2,2.5);
+
+           }
+           else {
             drawleafNode(cx1,cx2,2.5);
+           }
+            
         }
         else if((currentNode.isinternal==true) )//root is now an interanal node 
         {
     
             drawInternalNode(cx1,cx2,2.5);
+  
+            if(currentNode.top_left.highlight==true)
+            {
+                drawhighlightnode(temp1,temp2,2.5); 
+            }
+            else{
+                drawleafNode(temp1,temp2,2.5); 
+            }
+                 
+            if(currentNode.top_right.highlight==true){
 
-            drawleafNode(temp1,temp2,2.5); 
-            drawleafNode(temp1+temp3,temp2,2.5); 
-            drawleafNode(temp1+2*(temp3),temp2,2.5);  
-            drawleafNode(temp1+3*(temp3),temp2,2.5);  
+                 drawhighlightnode(temp1+temp3,temp2,2.5); 
+            }
+            else
+            {
+                 drawleafNode(temp1+temp3,temp2,2.5); 
+
+            }
+
+
+            if((currentNode.bottom_left.highlight==true)){
+                drawhighlightnode(temp1+2*(temp3),temp2,2.5);
+            }
+            
+            else
+            {
+                drawleafNode(temp1+2*(temp3),temp2,2.5);  
+            }
+            
+            if(currentNode.bottom_right.highlight==true){
+                drawhighlightnode(temp1+3*(temp3),temp2,2.5);  
+            }
+            else
+            {
+                drawleafNode(temp1+3*(temp3),temp2,2.5);  
+            }
+            
 
             drawLine(cx1,cx2,temp1,temp2);
             drawLine(cx1,cx2,temp1+temp3,temp2);
@@ -265,7 +305,85 @@ class Quad {
     }
 
     //search function
-    search(){
+    search(sNode,x,y){
+
+        var obj={};
+
+        obj.x=x;
+        obj.y=y;
+
+        console.log(obj);
+
+        if(sNode.point!=null && (sNode.point.x==x)&&(sNode.point.y==y)){
+            console.log("found");
+            sNode.highlight=true;
+            draw_tree(QTree.root,false,false,false,false,1);
+            return;
+        }
+
+        else if(sNode.top_left!=null && sNode.top_left.isinRange(obj))
+        {
+            sNode.top_left.search(sNode.top_left,obj.x,obj.y);
+        }
+
+        else if(sNode.top_right!=null && sNode.top_right.isinRange(obj))
+        {
+            sNode.top_right.search(sNode.top_right,obj.x,obj.y);
+        }
+
+        else if(sNode.bottom_right!=null && sNode.bottom_right.isinRange(obj))
+        {
+            sNode.bottom_right.search(sNode.bottom_right,obj.x,obj.y);
+        }
+
+        else if(sNode.bottom_left!=null && sNode.bottom_left.isinRange(obj))
+        {
+            sNode.bottom_left.search(sNode.bottom_left,obj.x,obj.y);
+        }
+
+        else;
+
+
+    }
+
+    de_search(sNode,x,y){
+
+        var obj={};
+
+        obj.x=x;
+        obj.y=y;
+
+        console.log(obj);
+
+        if(sNode.point!=null && (sNode.point.x==x)&&(sNode.point.y==y)){
+            console.log("found");
+            sNode.highlight=false;
+            draw_tree(QTree.root,false,false,false,false,1);
+            return;
+        }
+
+        else if(sNode.top_left!=null && sNode.top_left.isinRange(obj))
+        {
+            sNode.top_left.search(sNode.top_left,obj.x,obj.y);
+        }
+
+        else if(sNode.top_right!=null && sNode.top_right.isinRange(obj))
+        {
+            sNode.top_right.search(sNode.top_right,obj.x,obj.y);
+        }
+
+        else if(sNode.bottom_right!=null && sNode.bottom_right.isinRange(obj))
+        {
+            sNode.bottom_right.search(sNode.bottom_right,obj.x,obj.y);
+        }
+
+        else if(sNode.bottom_left!=null && sNode.bottom_left.isinRange(obj))
+        {
+            sNode.bottom_left.search(sNode.bottom_left,obj.x,obj.y);
+        }
+
+        else;
+
 
     }
 

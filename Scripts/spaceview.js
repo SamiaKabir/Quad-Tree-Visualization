@@ -14,7 +14,9 @@ function drawCircle(x, y, size) {
         .attr('class', 'click-circle')
         .attr("cx", x)
         .attr("cy", y)
-        .attr("r", size);
+        .attr("r", size)
+        .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut);
 }
 
 
@@ -33,6 +35,30 @@ function drawRect(x,y,width,height){
         .attr("stroke-width",0.5);
 }
 
+
+  // Create Event Handlers for mouse
+  function handleMouseOver() {  // Add interactivity
+
+    // Use D3 to select element, change color and size
+    d3.select(this).attr("r", 5).style("fill", "orange");
+
+
+
+    console.log(d3.select(this).attr("cx"));
+    console.log(d3.select(this).attr("cy"));
+
+    QTree.root.search(QTree.root,d3.select(this).attr("cx"),d3.select(this).attr("cy"));
+
+  }
+
+function handleMouseOut() {
+    // Use D3 to select element, change color back to normal
+    d3.select(this).attr("r", 2).style("fill", "black");
+    QTree.root.de_search(QTree.root,d3.select(this).attr("cx"),d3.select(this).attr("cy"));
+
+  }
+
+
 var count=1;
 
 var svg = d3.select('#svg1'); 
@@ -42,20 +68,26 @@ function init() {
     function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     }
-
-
+    function isInArray( array,value) {
+        return array.indexOf(value) > -1;
+      }
 
     svg.on('click', function() {
 
     //draw the points on the spaceview svg
         var points={};
         var coords = d3.mouse(this);
+        points.x=coords[0];
+        points.y=coords[1];
+
+        if(isInArray(all_point,points)==false){
+
     //    console.log(coords);
         drawCircle(coords[0], coords[1], 2);
        // addNode();
-        points.x=coords[0];
-        points.y=coords[1];
+
         all_point.push({point: points});
+        }
   
      //   console.log(all_point);
 
@@ -75,8 +107,9 @@ function init() {
         Nodes.corners=corner_points;
         
 
-        let root= new Quad(points, corner_points,true, false, null,null,null,null);
+        let root= new Quad(points, corner_points,true, false,false, null,null,null,null);
         console.log(root);
+
 
 
         drawRect(corner_points.x1, corner_points.y1, 600,600);
